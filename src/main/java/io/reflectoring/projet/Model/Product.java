@@ -1,7 +1,7 @@
 package io.reflectoring.projet.Model;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
+
 import lombok.Data;
 @Entity
 @Data

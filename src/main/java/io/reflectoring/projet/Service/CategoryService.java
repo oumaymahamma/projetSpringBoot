@@ -1,11 +1,11 @@
 package io.reflectoring.projet.Service;
 
+import io.reflectoring.projet.Model.Category;
 import io.reflectoring.projet.Repository.CategoryRepository;
-import jdk.jfr.Category;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,5 +22,5 @@ public class CategoryService {
 
     public void removeCategoryBy(int id) {categoryRepository.deleteById(id);
     }
-    public Optional<Category> getCategoryById(int id) {return categoryRepository.findById(id);}
+    public Category getCategoryById(int id) {return categoryRepository.findById(id);}
     }

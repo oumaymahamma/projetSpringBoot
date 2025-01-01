@@ -4,7 +4,7 @@ import io.reflectoring.projet.Model.Product;
 import io.reflectoring.projet.Service.CategoryService;
 import io.reflectoring.projet.Model.Category;
 import io.reflectoring.projet.Service.ProductService;
-import io.reflectoring.projet.dto.productDTO;
+import io.reflectoring.projet.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +47,7 @@ public class AdminController {
 
     @PostMapping("/admin/categories/add")
     public String postCatAdd(@ModelAttribute("category") Category category) {
-        categoryService.addCategory((jdk.jfr.Category) category); // Utilisation de l'instance `categoryService`
+        categoryService.addCategory(category); // Utilisation de l'instance `categoryService`
         return "redirect:/admin/categories"; // Redirection vers la liste des catégories
     }
 
@@ -59,9 +59,9 @@ public class AdminController {
 
     @GetMapping("/admin/categories/update/{id}")
     public String updateCat(@PathVariable int id, Model model) {
-        Optional<jdk.jfr.Category> category = categoryService.getCategoryById(id);
-        if (category.isPresent()) {
-            model.addAttribute("category", category.get());
+        Category category = categoryService.getCategoryById(id);
+        if (category != null) {
+            model.addAttribute("category", category);
             return "categoriesAdd";
         } else {
             return "404";
@@ -76,19 +76,19 @@ public class AdminController {
 
     @GetMapping("/admin/products/add")
     public String productAddGet(Model model) {
-        model.addAttribute("productDTO", new productDTO());
+        model.addAttribute("productDTO", new ProductDTO());
         model.addAttribute("categories", categoryService.getAllCategory());
         return "productAdd";
     }
 
     @PostMapping("/admin/products/add")
-    public String postProductAdd(@ModelAttribute("productDTO") productDTO productDTO,
+    public String postProductAdd(@ModelAttribute("productDTO") ProductDTO productDTO,
                                  @RequestParam("productImage") MultipartFile productImage,
                                  @RequestParam("imgName") String imgName) throws IOException {
+        Category category = categoryService.getCategoryById(productDTO.getCategoryId());
         Product product = new Product();
-        product.setId(productDTO.getId());
         product.setName(productDTO.getName());
-        product.setCategory(categoryService.getCategoryById(productDTO.getCategoryId()).orElse(null));
+        product.setCategory(category);
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
         product.setDescription(productDTO.getDescription());
@@ -126,10 +126,10 @@ public class AdminController {
         Optional<Product> productOptional = productService.getProductById(id);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-            productDTO productDTO = new productDTO();
+            ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
             productDTO.setName(product.getName());
-            productDTO.setCategoryId(product.getCategory().getClass());
+            productDTO.setCategoryId(product.getCategory().getId());
             productDTO.setPrice(product.getPrice());
             productDTO.setWeight(product.getWeight());
             productDTO.setDescription(product.getDescription());

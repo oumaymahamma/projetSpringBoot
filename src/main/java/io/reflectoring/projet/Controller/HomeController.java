@@ -1,10 +1,10 @@
 package io.reflectoring.projet.Controller;
 
-import ch.qos.logback.core.model.Model;
 import io.reflectoring.projet.Service.CategoryService;
 import io.reflectoring.projet.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 

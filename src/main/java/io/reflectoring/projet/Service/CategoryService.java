@@ -6,17 +6,19 @@ import io.reflectoring.projet.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CategoryService {
     @Autowired
-    static CategoryRepository categoryRepository;
-    public list<Category> getAllCategory(){
+    private CategoryRepository categoryRepository;
+
+    public List<Category> getAllCategory(){
         return categoryRepository.findAll();
     }
 
-    public static void addCategory(Category category){
+    public void addCategory(Category category){
         categoryRepository.save(category);
     }
 

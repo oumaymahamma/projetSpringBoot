@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class ProductDTO {
     private Long id;
     private String name;
@@ -17,6 +16,4 @@ public class ProductDTO {
     private double weight;
     private String description;
     private String imageName;
-
-
 }
